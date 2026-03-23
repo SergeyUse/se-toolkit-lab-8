@@ -210,10 +210,11 @@ Replace **`YOUR_VM_USERNAME`** and **`YOUR_VM_IP`** with your values.
 >
 > **Docker Hub rate limits (`Too many requests`).**
 >
-> If you're building outside the university network and hit Docker Hub rate limits, set the registry prefix to empty in `.env.docker.secret`:
+> If you're building outside the university network and hit Docker Hub rate limits, set the registry prefixes to empty in `.env.docker.secret`:
 >
 > ```text
-> REGISTRY_PREFIX=
+> REGISTRY_PREFIX_DOCKER_HUB=
+> REGISTRY_PREFIX_GHCR=
 > ```
 >
 > This is only needed outside the university. On campus, the default harbor cache avoids rate limits.
