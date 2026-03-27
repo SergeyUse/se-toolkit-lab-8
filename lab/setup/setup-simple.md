@@ -47,6 +47,12 @@ We refer to your fork as `fork` and to the original repo as `upstream`.
 
 1. [Protect a branch](../../wiki/github.md#protect-a-branch).
 
+#### 1.1.6. Sync your fork with upstream
+
+1. [Sync your fork](../../wiki/github.md#sync-a-fork) so you have the latest changes from the course repository.
+
+   Do this **before cloning** to the VM, and again whenever the instructors push updates.
+
 ### 1.2. SSH into your VM and set up the environment there
 
 1. [Connect to your VM](../../wiki/vm-access.md#connect-to-the-vm-as-the-user-user-local).
@@ -63,6 +69,21 @@ We refer to your fork as `fork` and to the original repo as `upstream`.
 
    > [!NOTE]
    > The `--recurse-submodules` flag clones the Qwen Code API [submodule](../../wiki/git.md#submodule) included in the repository.
+
+   > [!IMPORTANT]
+   > You will need to `git push` from the VM. If you use **VS Code Remote-SSH**, git credentials are forwarded automatically from your local machine. If you use a **plain SSH shell**, set up authentication on the VM:
+   >
+   > **Option A** — Clone with SSH instead of HTTPS:
+   > ```
+   > git clone --recurse-submodules git@github.com:YOUR_GITHUB_USERNAME/se-toolkit-lab-8.git
+   > ```
+   > This requires your VM's SSH key added to your [GitHub SSH keys](https://github.com/settings/keys).
+   >
+   > **Option B** — Use a GitHub personal access token for HTTPS:
+   > ```
+   > git remote set-url origin https://YOUR_TOKEN@github.com/YOUR_GITHUB_USERNAME/se-toolkit-lab-8.git
+   > ```
+   > Create a token at <https://github.com/settings/tokens> with `repo` scope.
 
 3. Go into the repository and install `Python` dependencies:
 
