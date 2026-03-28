@@ -127,9 +127,9 @@ extraPaths = [
   "mcp/mcp-lms/src",
   "mcp/mcp-obs/src",
   "qwen-code-api/src",
-  "nanobot-websocket-channel/client-telegram-bot/src",
-  "nanobot-websocket-channel/nanobot-channel-protocol/src",
-  "nanobot-websocket-channel/nanobot-webchat/src",
+  # "nanobot-websocket-channel/client-telegram-bot/src",
+  # "nanobot-websocket-channel/nanobot-channel-protocol/src",
+  # "nanobot-websocket-channel/nanobot-webchat/src",
 ]
 exclude = ["**/__pycache__", "**/node_modules", "**/.*", ".venv", ".direnv"]
 typeCheckingMode = "strict"
