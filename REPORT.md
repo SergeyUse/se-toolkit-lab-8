@@ -58,11 +58,37 @@ This demonstrates the skill prompt successfully teaches the agent to ask for the
 
 ## Task 2A — Deployed agent
 
-<!-- Paste a short nanobot startup log excerpt showing the gateway started inside Docker -->
+Nanobot gateway startup log showing successful deployment:
+
+```
+nanobot-1  | 🐈 Starting nanobot gateway version 0.1.4.post5 on port 18790...
+nanobot-1  | 2026-03-29 21:02:29.703 | INFO | nanobot.channels.manager:_init_channels:58 - WebChat channel enabled
+nanobot-1  | ✓ Channels enabled: webchat
+nanobot-1  | ✓ Heartbeat: every 1800s
+nanobot-1  | 2026-03-29 21:02:32.373 | DEBUG | nanobot.agent.tools.mcp:connect_mcp_servers:226 - MCP: registered tool 'mcp_lms_lms_health' from server 'lms'
+nanobot-1  | 2026-03-29 21:02:32.373 | INFO | nanobot.agent.tools.mcp:connect_mcp_servers:246 - MCP server 'lms': connected, 9 tools registered
+nanobot-1  | 2026-03-29 21:02:34.205 | DEBUG | nanobot.agent.tools.mcp:connect_mcp_servers:226 - MCP: registered tool 'mcp_webchat_ui_message' from server 'webchat'
+nanobot-1  | 2026-03-29 21:02:34.205 | INFO | nanobot.agent.tools.mcp:connect_mcp_servers:246 - MCP server 'webchat': connected, 1 tools registered
+nanobot-1  | 2026-03-29 21:02:34.205 | INFO | nanobot.agent.loop:run:280 - Agent loop started
+```
 
 ## Task 2B — Web client
 
-<!-- Screenshot of a conversation with the agent in the Flutter web app -->
+WebSocket endpoint test showing successful agent response:
+
+```
+Request: {"content": "What labs are available?"}
+Response: {"type":"text","content":"Here are the available labs in the LMS:\n\n1. **Lab 01** – Products, Architecture & Roles\n2. **Lab 02** — Run, Fix, and Deploy a Backend Service\n3. **Lab 03** — Backend API: Explore, Debug, Implement, Deploy\n4. **Lab 04** — Testing, Front-end, and AI Agents\n5. **Lab 05** — Data Pipeline and Analytics Dashboard\n6. **Lab 06** — Build Your Own Agent\n7. **Lab 07** — Build a Client with an AI Coding Agent\n8. **Lab 08** — lab-08\n\nIs there a specific lab you'd like to know more about? I can show you pass rates, completion rates, submission timelines, group performance, or top learners for any of these labs.","format":"markdown"}
+```
+
+The Flutter web client is accessible at `http://localhost:42002/flutter/` and returns the expected HTML page with the Nanobot web interface.
+
+**Verification checklist:**
+- [x] `docker compose ps` shows nanobot service running
+- [x] Nanobot logs show "Channels enabled: webchat" and MCP servers connected
+- [x] WebSocket endpoint at `/ws/chat` responds with real LMS data
+- [x] Flutter client accessible at `/flutter`
+- [x] Agent answers backed by LMS backend data (not generic responses)
 
 ## Task 3A — Structured logging
 
