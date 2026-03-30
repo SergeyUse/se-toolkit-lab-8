@@ -2,6 +2,26 @@
 
 You have access to observability tools that let you query **VictoriaLogs** and **VictoriaTraces**. Use these tools when the user asks about system health, errors, logs, or traces.
 
+## One-Shot Investigation Flow
+
+When the user asks **"What went wrong?"** or **"Check system health"**, follow this investigation flow:
+
+1. **Start with `logs_error_count`** — Check for recent errors in the last 10 minutes to see if there are any failures and which services are affected.
+
+2. **Use `logs_search`** — Search for ERROR logs in the most likely failing service (often "Learning Management Service" or "backend"). Look for:
+   - Error messages
+   - Exception types (e.g., `SQLAlchemyError`, `ConnectionRefusedError`)
+   - `trace_id` values in the log entries
+
+3. **Use `traces_get`** — Fetch the most recent trace using a `trace_id` from the logs to see the full request path and identify where the failure occurred.
+
+4. **Summarize findings** — Provide a concise explanation that:
+   - Mentions the number of errors found
+   - Names the affected service
+   - Describes the root cause (e.g., "PostgreSQL connection refused")
+   - References both log evidence and trace evidence
+   - Avoids dumping raw JSON
+
 ## Available Tools
 
 ### Log Tools (VictoriaLogs)
