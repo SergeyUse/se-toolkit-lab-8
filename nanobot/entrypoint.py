@@ -43,6 +43,19 @@ def main():
         if "NANOBOT_LMS_API_KEY" in os.environ:
             lms_env["NANOBOT_LMS_API_KEY"] = os.environ["NANOBOT_LMS_API_KEY"]
 
+    # Override MCP OBS server env vars
+    if "tools" in config and "mcpServers" in config["tools"] and "obs" in config["tools"]["mcpServers"]:
+        obs_config = config["tools"]["mcpServers"]["obs"]
+        obs_env = obs_config.setdefault("env", {})
+        if "VICTORIALOGS_HOST_ADDRESS" in os.environ:
+            obs_env["VICTORIALOGS_HOST_ADDRESS"] = os.environ["VICTORIALOGS_HOST_ADDRESS"]
+        if "VICTORIALOGS_HOST_PORT" in os.environ:
+            obs_env["VICTORIALOGS_HOST_PORT"] = os.environ["VICTORIALOGS_HOST_PORT"]
+        if "VICTORIATRACES_HOST_ADDRESS" in os.environ:
+            obs_env["VICTORIATRACES_HOST_ADDRESS"] = os.environ["VICTORIATRACES_HOST_ADDRESS"]
+        if "VICTORIATRACES_HOST_PORT" in os.environ:
+            obs_env["VICTORIATRACES_HOST_PORT"] = os.environ["VICTORIATRACES_HOST_PORT"]
+
     # Configure webchat channel if enabled
     if "NANOBOT_WEBCHAT_CONTAINER_ADDRESS" in os.environ:
         config.setdefault("channels", {})["webchat"] = {
