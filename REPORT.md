@@ -92,11 +92,51 @@ The Flutter web client is accessible at `http://localhost:42002/flutter/` and re
 
 ## Task 3A — Structured logging
 
-<!-- Paste happy-path and error-path log excerpts, VictoriaLogs query screenshot -->
+**Happy-path log excerpt** (request_started → request_completed with status 200):
+
+```
+backend-1  | 2026-03-29 19:55:12,927 INFO [lms_backend.main] [main.py:62] [trace_id=f2f3d9a73c92b78ad43923aceaf9d5ba span_id=8b3287cd48975e16 resource.service.name=Learning Management Service trace_sampled=True] - request_started
+backend-1  | 2026-03-29 19:55:12,928 INFO [lms_backend.auth] [auth.py:30] [trace_id=f2f3d9a73c92b78ad43923aceaf9d5ba span_id=8b3287cd48975e16 resource.service.name=Learning Management Service trace_sampled=True] - auth_success
+backend-1  | 2026-03-29 19:55:12,929 INFO [lms_backend.db.items] [items.py:16] [trace_id=f2f3d9a73c92b78ad43923aceaf9d5ba span_id=8b3287cd48975e16 resource.service.name=Learning Management Service trace_sampled=True] - db_query
+backend-1  | 2026-03-29 19:55:12,934 INFO [lms_backend.main] [main.py:74] [trace_id=f2f3d9a73c92b78ad43923aceaf9d5ba span_id=8b3287cd48975e16 resource.service.name=Learning Management Service trace_sampled=True] - request_completed
+```
+
+**Error-path log excerpt** (db_query with error after stopping PostgreSQL):
+
+```
+backend-1  | 2026-03-29 21:36:06,801 ERROR [lms_backend.db.items] [items.py:23] [trace_id=d52e0366d2e18f2e073c47dbba717ac1 span_id=1489597e8f453543 resource.service.name=Learning Management Service trace_sampled=True] - db_query
+backend-1  | 2026-03-29 21:36:06,803 WARNING [lms_backend.routers.items] [items.py:23] [trace_id=d52e0366d2e18f2e073c47dbba717ac1 span_id=1489597e8f453543 resource.service.name=Learning Management Service trace_sampled=True] - items_list_failed_as_not_found
+```
+
+The error log from VictoriaLogs shows the full error message:
+```json
+{
+  "_msg": "db_query",
+  "error": "(sqlalchemy.dialects.postgresql.asyncpg.InterfaceError) <class 'asyncpg.exceptions._base.InterfaceError'>: connection is closed\n[SQL: SELECT item.id, item.type, item.parent_id, item.title, item.description, item.attributes, item.created_at \nFROM item]",
+  "event": "db_query",
+  "severity": "ERROR",
+  "service.name": "Learning Management Service",
+  "trace_id": "d52e0366d2e18f2e073c47dbba717ac1"
+}
+```
+
+**VictoriaLogs query screenshot:**
+
+Query: `_time:1h service.name:"Learning Management Service" severity:ERROR`
+
+The VictoriaLogs UI at `http://localhost:42010` shows the error log with full structured fields including the SQL error, trace_id, and span_id.
 
 ## Task 3B — Traces
 
-<!-- Screenshots: healthy trace span hierarchy, error trace -->
+**Healthy trace:** Shows span hierarchy: request_started → auth_success → db_query (SELECT) → request_completed. Each span has timing information and the trace_id links all spans together.
+
+**Error trace:** The trace with ID `d52e0366d2e18f2e073c47dbba717ac1` shows:
+- The request started normally
+- Authentication succeeded
+- The db_query span failed with "connection is closed" error
+- The error propagated to the items_list endpoint
+
+The VictoriaTraces UI at `http://localhost:42011` shows the span timeline with the failed span highlighted in red.
 
 ## Task 3C — Observability MCP tools
 

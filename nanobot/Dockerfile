@@ -26,6 +26,7 @@ COPY --from=workspace nanobot/entrypoint.py ./nanobot/entrypoint.py
 
 # Copy workspace packages that nanobot depends on
 COPY --from=workspace mcp/mcp-lms ./mcp/mcp-lms
+COPY --from=workspace mcp/mcp-obs ./mcp/mcp-obs
 COPY --from=workspace nanobot-websocket-channel/mcp-webchat ./nanobot-websocket-channel/mcp-webchat
 COPY --from=workspace nanobot-websocket-channel/nanobot-webchat ./nanobot-websocket-channel/nanobot-webchat
 COPY --from=workspace nanobot-websocket-channel/nanobot-channel-protocol ./nanobot-websocket-channel/nanobot-channel-protocol
