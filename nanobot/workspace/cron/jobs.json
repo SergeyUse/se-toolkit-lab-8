@@ -29,6 +29,35 @@
       "createdAtMs": 1711828800000,
       "updatedAtMs": 1711828800000,
       "deleteAfterRun": false
+    },
+    {
+      "id": "8b6ee7b8",
+      "name": "Check for backend errors in th",
+      "enabled": true,
+      "schedule": {
+        "kind": "every",
+        "atMs": null,
+        "everyMs": 900000,
+        "expr": null,
+        "tz": null
+      },
+      "payload": {
+        "kind": "agent_turn",
+        "message": "Check for backend errors in the last 15 minutes using logs_error_count. If errors found, search logs and inspect traces. Post a short summary. If no errors, say the system looks healthy.",
+        "deliver": true,
+        "channel": "webchat",
+        "to": "78f054eb-6731-40cf-8a52-cc27951d9369"
+      },
+      "state": {
+        "nextRunAtMs": 1774908238896,
+        "lastRunAtMs": null,
+        "lastStatus": null,
+        "lastError": null,
+        "runHistory": []
+      },
+      "createdAtMs": 1774907338896,
+      "updatedAtMs": 1774907338896,
+      "deleteAfterRun": false
     }
   ]
 }
